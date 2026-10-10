@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import Menu from "./components/Menu";
+import Catalogo from "./components/Catalogo";
+import Testimonials from "./components/Testimonials";
 import "./App.css";
 
 function App() {
@@ -9,7 +10,8 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <Menu />
+        <Catalogo />
+        <Testimonials />
       </main>
     </>
   );

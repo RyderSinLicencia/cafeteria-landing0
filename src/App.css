@@ -1,7 +1,7 @@
 :root {
-    --cafe: #4b2e1e;
-    --crema: #f5ebe0;
-    --acento: #d98e04;
+    --negro: #1a1a1a;
+    --hueso: #f7f4ef;
+    --acento: #b5835a;
 }
 
 * {
@@ -15,8 +15,8 @@ html {
 
 body {
     font-family: system-ui, sans-serif;
-    color: var(--cafe);
-    background: var(--crema);
+    color: var(--negro);
+    background: var(--hueso);
 }
 
 .header {
@@ -27,13 +27,15 @@ body {
     background: #fff;
     position: sticky;
     top: 0;
+    z-index: 10;
 }
 
 .logo {
-    font-weight: bold;
+    font-weight: 800;
     font-size: 1.25rem;
+    letter-spacing: 2px;
     text-decoration: none;
-    color: var(--cafe);
+    color: var(--negro);
 }
 
 .nav {
@@ -44,16 +46,21 @@ body {
 
 .nav a {
     text-decoration: none;
-    color: var(--cafe);
+    color: var(--negro);
 }
 
 .btn {
     display: inline-block;
-    background: var(--acento);
+    background: var(--negro);
     color: #fff !important;
     padding: 0.6rem 1.2rem;
-    border-radius: 6px;
+    border-radius: 4px;
     text-decoration: none;
+}
+
+.hero .btn {
+    background: #fff;
+    color: var(--negro) !important;
 }
 
 .hero {
@@ -65,23 +72,24 @@ body {
     text-align: center;
     gap: 1rem;
     padding: 2rem 5%;
-    background: var(--cafe);
     color: #fff;
+    background: linear-gradient(135deg, #1a1a1a, #4a3a2e);
+}
+
+.hero-tag {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    color: var(--acento);
 }
 
 .hero h1 {
     font-size: clamp(2rem, 6vw, 3.5rem);
+    max-width: 700px;
 }
 
 .hero p {
     max-width: 500px;
-}
-
-@media (max-width: 600px) {
-    .nav {
-        gap: 0.75rem;
-        font-size: 0.9rem;
-    }
 }
 
 .seccion {
@@ -96,33 +104,89 @@ body {
     margin-bottom: 2rem;
 }
 
-.menu-grid {
+.catalogo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
 }
 
-.card {
+.producto {
     background: #fff;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    border-radius: 8px;
+    overflow: hidden;
     transition: transform 0.2s;
 }
 
-.card:hover {
+.producto:hover {
     transform: translateY(-4px);
 }
 
-.card-emoji {
-    font-size: 2.5rem;
+.producto-img {
+    height: 280px;
+    position: relative;
 }
 
-.card strong {
+.badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--negro);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+}
+
+.producto-info {
+    padding: 1rem 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.producto-info small {
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.producto-info strong {
     color: var(--acento);
-    font-size: 1.1rem;
+}
+
+.testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.testimonio {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--acento);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.testimonio p {
+    font-style: italic;
+}
+
+.testimonio footer {
+    font-weight: bold;
     margin-top: auto;
+}
+
+.estrellas {
+    color: var(--acento);
+    font-size: 1.2rem;
+}
+
+@media (max-width: 600px) {
+    .nav {
+        gap: 0.75rem;
+        font-size: 0.9rem;
+    }
 }

@@ -1,5 +1,6 @@
 import { useProductos } from "../context/ProductosContext";
 import { formatoPrecio } from "../utils/formato";
+import { urlImagen } from "../services/api";
 
 function Catalogo() {
   const { productos, cargando, error } = useProductos();
@@ -18,8 +19,9 @@ function Catalogo() {
           {productos.map((p) => (
             <article key={p.id} className="producto">
               <div className="producto-img" style={{ background: p.color }}>
-                {p.nuevo && <span className="badge">Nuevo</span>}
-              </div>
+  {p.imagen && <img src={urlImagen(p.imagen)} alt={p.nombre} loading="lazy" />}
+  {p.nuevo && <span className="badge">Nuevo</span>}
+</div>
               <div className="producto-info">
                 <small>{p.categoria}</small>
                 <h3>{p.nombre}</h3>

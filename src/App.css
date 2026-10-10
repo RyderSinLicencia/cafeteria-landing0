@@ -429,3 +429,11 @@ body {
     color: #777;
     padding: 1rem;
 }
+
+.celda-acciones {
+    display: table-cell;
+}
+
+.celda-acciones button {
+    margin-right: 0.75rem;
+}

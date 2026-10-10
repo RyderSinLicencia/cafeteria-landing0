@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProductos } from "../context/ProductosContext";
-import { api } from "../services/api";
+import { api, urlImagen } from "../services/api";
 import { formatoPrecio } from "../utils/formato";
 
 const vacio = { nombre: "", categoria: "", precio: "", color: "#d9c5b2", nuevo: false };
@@ -32,13 +32,20 @@ function Login({ onEntrar }) {
         <h2>Acceso administrador</h2>
         <div className="campo">
           <label htmlFor="usuario">Usuario</label>
-          <input id="usuario" value={usuario}
-            onChange={(e) => { setUsuario(e.target.value); setError(""); }} />
+          <input
+            id="usuario"
+            value={usuario}
+            onChange={(e) => { setUsuario(e.target.value); setError(""); }}
+          />
         </div>
         <div className={`campo ${error ? "invalido" : ""}`}>
           <label htmlFor="clave">Contraseña</label>
-          <input id="clave" type="password" value={clave}
-            onChange={(e) => { setClave(e.target.value); setError(""); }} />
+          <input
+            id="clave"
+            type="password"
+            value={clave}
+            onChange={(e) => { setClave(e.target.value); setError(""); }}
+          />
           {error && <span className="error" role="alert">{error}</span>}
         </div>
         <button type="submit" className="btn" disabled={enviando}>
@@ -51,14 +58,60 @@ function Login({ onEntrar }) {
 
 function Panel({ onSalir }) {
   const { productos, agregar, actualizar, eliminar } = useProductos();
+
   const [form, setForm] = useState(vacio);
   const [editandoId, setEditandoId] = useState(null);
   const [errores, setErrores] = useState({});
   const [errorServidor, setErrorServidor] = useState("");
 
+  const [archivo, setArchivo] = useState(null);
+  const [imagenActual, setImagenActual] = useState(null);
+  const [quitarImagen, setQuitarImagen] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [inputKey, setInputKey] = useState(0);
+
+  // Vista previa local del archivo elegido
+  useEffect(() => {
+    if (!archivo) {
+      setPreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(archivo);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [archivo]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+  };
+
+  const handleArchivo = (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+
+    if (!["image/jpeg", "image/png", "image/webp"].includes(f.type)) {
+      setErrores((prev) => ({ ...prev, imagen: "Solo JPG, PNG o WEBP." }));
+      e.target.value = "";
+      return;
+    }
+    if (f.size > 2 * 1024 * 1024) {
+      setErrores((prev) => ({ ...prev, imagen: "La imagen no puede pesar más de 2 MB." }));
+      e.target.value = "";
+      return;
+    }
+    setErrores((prev) => ({ ...prev, imagen: undefined }));
+    setArchivo(f);
+    setQuitarImagen(false);
+  };
+
+  const handleQuitarImagen = () => {
+    if (archivo) {
+      setArchivo(null);
+      setInputKey((k) => k + 1); // vacía el input de archivo
+    } else {
+      setQuitarImagen(true);
+    }
   };
 
   const validar = () => {
@@ -83,6 +136,10 @@ function Panel({ onSalir }) {
     setForm(vacio);
     setErrores({});
     setErrorServidor("");
+    setArchivo(null);
+    setImagenActual(null);
+    setQuitarImagen(false);
+    setInputKey((k) => k + 1);
   };
 
   const handleSubmit = async (e) => {
@@ -92,7 +149,15 @@ function Panel({ onSalir }) {
     setErrorServidor("");
     if (Object.keys(err).length > 0) return;
 
-    const datos = { ...form, precio: Number(form.precio) };
+    const datos = new FormData();
+    datos.append("nombre", form.nombre.trim());
+    datos.append("categoria", form.categoria.trim());
+    datos.append("precio", String(Number(form.precio)));
+    datos.append("color", form.color);
+    datos.append("nuevo", String(form.nuevo));
+    if (archivo) datos.append("imagen", archivo);
+    if (quitarImagen) datos.append("quitarImagen", "true");
+
     try {
       if (editandoId) await actualizar(editandoId, datos);
       else await agregar(datos);
@@ -104,9 +169,19 @@ function Panel({ onSalir }) {
 
   const editar = (p) => {
     setEditandoId(p.id);
-    setForm({ ...p, precio: String(p.precio) });
+    setForm({
+      nombre: p.nombre,
+      categoria: p.categoria,
+      precio: String(p.precio),
+      color: p.color,
+      nuevo: p.nuevo,
+    });
     setErrores({});
     setErrorServidor("");
+    setImagenActual(p.imagen || null);
+    setArchivo(null);
+    setQuitarImagen(false);
+    setInputKey((k) => k + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -156,6 +231,27 @@ function Panel({ onSalir }) {
           <input id="color" name="color" type="color" value={form.color} onChange={handleChange} />
         </div>
 
+        <div className={`campo ${errores.imagen ? "invalido" : ""}`}>
+          <label htmlFor="imagen">Imagen (JPG, PNG o WEBP, máx. 2 MB)</label>
+          <input
+            key={inputKey}
+            id="imagen"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleArchivo}
+          />
+          {errores.imagen && <span className="error" role="alert">{errores.imagen}</span>}
+
+          {(preview || (imagenActual && !quitarImagen)) && (
+            <div className="preview">
+              <img src={preview || urlImagen(imagenActual)} alt="Vista previa del producto" />
+              <button type="button" className="link peligro" onClick={handleQuitarImagen}>
+                Quitar imagen
+              </button>
+            </div>
+          )}
+        </div>
+
         <label className="check">
           <input type="checkbox" name="nuevo" checked={form.nuevo} onChange={handleChange} />
           Marcar como "Nuevo"
@@ -183,7 +279,16 @@ function Panel({ onSalir }) {
           <tbody>
             {productos.map((p) => (
               <tr key={p.id}>
-                <td><span className="muestra" style={{ background: p.color }} /></td>
+                <td>
+                  <span
+                    className="muestra"
+                    style={
+                      p.imagen
+                        ? { backgroundImage: `url(${urlImagen(p.imagen)})` }
+                        : { background: p.color }
+                    }
+                  />
+                </td>
                 <td>{p.nombre}</td>
                 <td>{p.categoria}</td>
                 <td>{formatoPrecio(p.precio)}</td>
@@ -214,7 +319,11 @@ function Admin() {
     setAutenticado(false);
   };
 
-  return autenticado ? <Panel onSalir={salir} /> : <Login onEntrar={() => setAutenticado(true)} />;
+  return autenticado ? (
+    <Panel onSalir={salir} />
+  ) : (
+    <Login onEntrar={() => setAutenticado(true)} />
+  );
 }
 
 export default Admin;

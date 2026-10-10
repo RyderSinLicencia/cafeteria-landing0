@@ -1,0 +1,1 @@
+export const formatoPrecio = (n) => "$" + Number(n).toLocaleString("es-CL");

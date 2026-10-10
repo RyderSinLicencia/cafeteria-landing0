@@ -310,3 +310,122 @@ body {
         font-size: 0.9rem;
     }
 }
+
+/* Admin */
+.admin {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.admin-barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-acciones {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.admin-login {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.admin-login .formulario {
+    width: 100%;
+}
+
+.admin-form {
+    max-width: 100%;
+    width: 100%;
+}
+
+.btn-sec {
+    background: #fff;
+    border: 1.5px solid var(--negro);
+}
+
+.btn-sec:hover {
+    background: #f0f0f0;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.campo input[type="color"] {
+    height: 42px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.tabla-wrap {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+}
+
+.tabla th {
+    background: var(--rosa);
+}
+
+.muestra {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.celda-acciones {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.link {
+    background: none;
+    border: none;
+    font: inherit;
+    color: var(--rosa-oscuro);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    text-align: left;
+}
+
+.link.peligro {
+    color: #d32f2f;
+}
+
+.vacio {
+    text-align: center;
+    color: #777;
+    padding: 1rem;
+}

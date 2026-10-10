@@ -1,7 +1,8 @@
 :root {
+    --rosa: #FFC5D3;
+    --rosa-suave: #FFF3F6;
+    --rosa-oscuro: #B84A68;
     --negro: #1a1a1a;
-    --hueso: #f7f4ef;
-    --acento: #b5835a;
 }
 
 * {
@@ -16,9 +17,10 @@ html {
 body {
     font-family: system-ui, sans-serif;
     color: var(--negro);
-    background: var(--hueso);
+    background: var(--rosa-suave);
 }
 
+/* Header */
 .header {
     display: flex;
     justify-content: space-between;
@@ -49,20 +51,35 @@ body {
     color: var(--negro);
 }
 
+/* Botones */
 .btn {
     display: inline-block;
-    background: var(--negro);
-    color: #fff !important;
+    background: var(--rosa);
+    color: var(--negro) !important;
     padding: 0.6rem 1.2rem;
     border-radius: 4px;
     text-decoration: none;
+    border: none;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #ffadc1;
 }
 
 .hero .btn {
-    background: #fff;
-    color: var(--negro) !important;
+    background: var(--negro);
+    color: #fff !important;
 }
 
+.hero .btn:hover {
+    background: #333;
+}
+
+/* Hero */
 .hero {
     min-height: 80vh;
     display: flex;
@@ -72,15 +89,16 @@ body {
     text-align: center;
     gap: 1rem;
     padding: 2rem 5%;
-    color: #fff;
-    background: linear-gradient(135deg, #1a1a1a, #4a3a2e);
+    color: var(--negro);
+    background: linear-gradient(135deg, var(--rosa), #ffe3ea);
 }
 
 .hero-tag {
     text-transform: uppercase;
     letter-spacing: 3px;
     font-size: 0.8rem;
-    color: var(--acento);
+    color: var(--rosa-oscuro);
+    font-weight: 700;
 }
 
 .hero h1 {
@@ -92,6 +110,7 @@ body {
     max-width: 500px;
 }
 
+/* Secciones */
 .seccion {
     padding: 4rem 5%;
     max-width: 1100px;
@@ -104,6 +123,7 @@ body {
     margin-bottom: 2rem;
 }
 
+/* Catálogo */
 .catalogo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -130,9 +150,10 @@ body {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: var(--negro);
-    color: #fff;
+    background: var(--rosa);
+    color: var(--negro);
     font-size: 0.75rem;
+    font-weight: 700;
     padding: 0.25rem 0.6rem;
     border-radius: 4px;
 }
@@ -151,9 +172,10 @@ body {
 }
 
 .producto-info strong {
-    color: var(--acento);
+    color: var(--rosa-oscuro);
 }
 
+/* Testimonios */
 .testimonios-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -164,7 +186,7 @@ body {
     background: #fff;
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid var(--acento);
+    border-left: 4px solid var(--rosa);
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -180,8 +202,106 @@ body {
 }
 
 .estrellas {
-    color: var(--acento);
+    color: var(--rosa-oscuro);
     font-size: 1.2rem;
+}
+
+/* Formulario */
+.formulario {
+    max-width: 520px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.campo label {
+    font-weight: 600;
+}
+
+.campo input,
+.campo textarea {
+    font: inherit;
+    padding: 0.7rem;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: var(--rosa-oscuro);
+}
+
+.campo.invalido input,
+.campo.invalido textarea {
+    border-color: #d32f2f;
+}
+
+.error {
+    color: #d32f2f;
+    font-size: 0.85rem;
+}
+
+.exito {
+    background: var(--rosa);
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Footer */
+.footer {
+    background: var(--negro);
+    color: #fff;
+    padding: 3rem 5% 1.5rem;
+}
+
+.footer-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.footer h3 {
+    color: var(--rosa);
+    margin-bottom: 0.75rem;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--rosa);
+}
+
+.copy {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #aaa;
 }
 
 @media (max-width: 600px) {

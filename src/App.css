@@ -33,11 +33,37 @@ body {
 }
 
 .logo {
-    font-weight: 800;
-    font-size: 1.25rem;
-    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     text-decoration: none;
     color: var(--negro);
+}
+
+.logo img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.logo-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.logo-texto small {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8a6a4f;
+}
+
+.logo-texto strong {
+    font-size: 1.15rem;
+    color: var(--rosa-oscuro);
 }
 
 .nav {
@@ -308,6 +334,15 @@ body {
     .nav {
         gap: 0.75rem;
         font-size: 0.9rem;
+    }
+
+    .logo-texto small {
+        display: none;
+    }
+
+    .logo img {
+        width: 42px;
+        height: 42px;
     }
 }
 

@@ -3,7 +3,7 @@ function Footer() {
         <footer className="footer">
             <div className="footer-grid">
                 <div>
-                    <h3>NOVA Studio</h3>
+                    <h3>Boutique ChicasGlam</h3>
                     <p>Moda femenina cómoda y atemporal.</p>
                 </div>
                 <div>
@@ -23,7 +23,7 @@ function Footer() {
                     </ul>
                 </div>
             </div>
-            <p className="copy">© 2026 NOVA Studio. Proyecto de portafolio.</p>
+            <p className="copy">© 2026 Boutique ChicasGlam.</p>
         </footer>
     );
 }
